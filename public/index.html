@@ -8,10 +8,106 @@
     <title>cart</title>
   </head>
   <body>
+
+   <script>
+     var PRODUCT=[
+
+         {
+             id:1,
+             name:'Тоник для лица «Guerisson skin»',
+             photo:'http://optcarboxy.local/images/18.png',
+             price:1450,
+         },
+
+         {
+             id:2,
+             name:'Карбокси-маска Dj Carborn Therapy',
+    
+             price:2500,
+         },
+
+        {
+             id:3,
+             name:'Guerisson Red Jinseng cream',
+             photo:'http://optcarboxy.local/images/gfhs11.png',
+             price:550,
+         },
+
+         {
+             id:4,
+             name:'Guerisson 9 complex cream',
+             photo:'http://optcarboxy.local/images/hgdjhkfsss.png',
+             price:550,
+         },
+
+         {
+             id:5,
+             name:'Normal No More',
+             photo:'http://optcarboxy.local/images/fgskfjlkfee.png',
+             price:265,
+         },
+
+     ];
+   </script>
+
     <noscript>
       <strong>We're sorry but cart doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+
+    <div id="cart">
+
+       <!--корзина форма start-->
+        <cart></cart>
+
+        <div class="form_block" v-cloak v-show="$store.state.showForm">
+            <div class="wrap_form_block">
+                 <span class="close">
+                    <font-awesome-icon @click="hiddenForm" icon="times-circle"></font-awesome-icon>
+                 </span>
+                <div class="form_title">Оформить заказ</div>
+                <form action="https://money.yandex.ru/eshop.xml" method="post" target="_blank">
+                    <input name="shopId" value="172021" type="hidden" required/>
+                    <input name="scid" value="705575" type="hidden" required/>
+
+                    <!--                   <input name="shopId" value="100500" type="hidden" required/>-->
+                    <!--                   <input name="scid" value="555777" type="hidden" required/>-->
+                    <div class="form_wrap">
+                        <label>Имя покупателя</label>
+                        <input required  name="custName" value="" />
+                    </div>
+
+                    <div class="form_wrap">
+                        <label>Телефон покупателя</label>
+                        <input required  name="customerNumber" type="tel" value="" />
+                    </div>
+
+                    <div class="form_wrap">
+                        <label>Эл. почта покупателя</label>
+                        <input name="custEmail"  type="email" value="" />
+                    </div>
+
+                    <input name="sum" type="hidden"  :value="$store.getters.Total"  >
+                    <input type="hidden" name="orderDetails" :value="$store.getters.orderDetails" />
+
+                    <input name="ym_merchant_receipt" :value="$store.getters.orderDetails2"  type="hidden"/>
+                    <input type="submit" value="Заплатить">
+                </form>
+
+
+            </div>
+        </div>
+      <!--корзина форма end-->
+
+
+      <p>
+        <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(1)">1</a>
+        <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(2)">2</a>
+        <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(3)">3</a>
+        <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(4)">4</a>
+        <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(5)">5</a>
+      </p>
+
+    </div>
     <!-- built files will be auto injected -->
   </body>
 </html>
