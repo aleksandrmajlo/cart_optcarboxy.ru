@@ -199,6 +199,16 @@
     [v-cloak] {
         display: none;
     }
+
+#cart.mob{
+  .form_block ,
+  .cart_conteer{
+     zoom: 2;
+  }
+  .form_block {
+    z-index:  1000000;
+  }
+}
 </style>
 
 

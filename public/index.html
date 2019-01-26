@@ -69,8 +69,6 @@
                     <input name="shopId" value="172021" type="hidden" required/>
                     <input name="scid" value="705575" type="hidden" required/>
 
-                    <!--                   <input name="shopId" value="100500" type="hidden" required/>-->
-                    <!--                   <input name="scid" value="555777" type="hidden" required/>-->
                     <div class="form_wrap">
                         <label>Имя покупателя</label>
                         <input required  name="custName" value="" />
@@ -84,6 +82,11 @@
                     <div class="form_wrap">
                         <label>Эл. почта покупателя</label>
                         <input name="custEmail"  type="email" value="" />
+                    </div>
+
+                    <div class="form_wrap">
+                        <label>Адрес доставки</label>
+                        <input name="custAddr" value="" size="64"/>
                     </div>
 
                     <input name="sum" type="hidden"  :value="$store.getters.Total"  >
