@@ -9,7 +9,8 @@ export default new Vuex.Store({
     product: PRODUCT,
     cart: [],
 
-    showForm: false
+    showForm: false,
+    showFormLead: false
   },
   getters: {
     doneCart: state => {
@@ -33,42 +34,43 @@ export default new Vuex.Store({
     orderDetails: state => {
       let str = "";
       state.cart.forEach(el => {
-           str+=el.name+ " -"+el.count+" шт.; "
+        str += el.name + " -" + el.count + " шт.; "
       });
       return str;
     },
 
     orderDetails2: state => {
       //{"customerContact": "+79001231212","taxSystem": 1, "items":[
-        // { "quantity": 1.154,
-        //   "price": {"amount": 300.23},
-        //   "tax": 3,
-        //    "text": "Зеленый чай \"Юн Ву\", кг",
-        //    "paymentMethodType": "full_prepayment ",
-        //     "paymentSubjectType": "commodity"
-        // },{
-        // "quantity": 2,
-        // "price": {"amount": 200.00},
-        // "tax": 3,
-        // "text": "Кружка для чая, шт., скидка 10%",
-        // "paymentMethodType": "full_prepayment ","paymentSubjectType": "commodity"}]}
+      // { "quantity": 1.154,
+      //   "price": {"amount": 300.23},
+      //   "tax": 3,
+      //    "text": "Зеленый чай \"Юн Ву\", кг",
+      //    "paymentMethodType": "full_prepayment ",
+      //     "paymentSubjectType": "commodity"
+      // },{
+      // "quantity": 2,
+      // "price": {"amount": 200.00},
+      // "tax": 3,
+      // "text": "Кружка для чая, шт., скидка 10%",
+      // "paymentMethodType": "full_prepayment ","paymentSubjectType": "commodity"}]}
 
-       let data = {
-           "customerContact":"guerisson@yandex.ru",
-           // "taxSystem": 1,
-           "items":[]
+      let data = {
+        "customerContact": "guerisson@yandex.ru",
+        // "taxSystem": 1,
+        "items": []
 
-       };
+      };
       state.cart.forEach(el => {
-          data.items.push(
-              {
-                  "quantity":el.count,
-                  "price":{"amount": el.price},
-                  "text": el.name,
-                  "tax": 1,
-              }
+        data.items.push({
+            "quantity": el.count,
+            "price": {
+              "amount": el.price
+            },
+            "text": el.name,
+            "tax": 1,
+          }
 
-          )
+        )
       });
       return JSON.stringify(data);
     },
@@ -84,7 +86,9 @@ export default new Vuex.Store({
         state.cart.forEach(el => {
           if (el.id === id) {
             inCart = true;
-            this.commit("setCount", { id: el.id });
+            this.commit("setCount", {
+              id: el.id
+            });
             return true;
           }
         });
@@ -132,10 +136,16 @@ export default new Vuex.Store({
     remove(state, index) {
       state.cart.splice(index, 1);
     },
+
     // скрыть показать форму
     show_hideForm(state) {
       state.showForm = !state.showForm;
-    }
+    },
+    // скрыть показать форму для лидов
+    show_hideFormLead(state) {
+      state.showFormLead = !state.showFormLead;
+    },
+
   },
   actions: {}
 });

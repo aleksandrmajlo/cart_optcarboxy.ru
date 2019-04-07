@@ -1,116 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>cart</title>
-  </head>
-  <body>
 
-   <script>
-     var PRODUCT=[
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title>cart</title>
+</head>
 
-         {
-             id:1,
-             name:'Тоник для лица «Guerisson skin»',
-             photo:'http://optcarboxy.local/images/18.png',
-             price:1450,
-         },
+<body>
 
-         {
-             id:2,
-             name:'Карбокси-маска Dj Carborn Therapy',
-    
-             price:2500,
-         },
+  <script src="http://optcarboxy.ru/js/jquery-1.7.2.min.js"></script>
+  <script>
+    (function (e) {
+      function t() {
+        var e = document.createElement("input"),
+          t = "onpaste";
+        return e.setAttribute(t, ""), "function" == typeof e[t] ? "paste" : "input"
+      }
+      var n, a = t() + ".mask",
+        r = navigator.userAgent,
+        i = /iphone/i.test(r),
+        o = /android/i.test(r);
+      e.mask = {
+        definitions: {
+          9: "[0-9]",
+          0: "[0-9]",
+          a: "[A-Za-z]",
+          "*": "[A-Za-z0-9]"
+        },
+        dataName: "rawMaskFn",
+        placeholder: "_"
+      }, e.fn.extend({
+        caret: function (e, t) {
+          var n;
+          if (0 !== this.length && !this.is(":hidden")) return "number" == typeof e ? (t = "number" ==
+            typeof t ? t : e, this.each(function () {
+              this.setSelectionRange ? this.setSelectionRange(e, t) : this.createTextRange && (n = this
+                .createTextRange(), n.collapse(!0), n.moveEnd("character", t), n.moveStart("character",
+                  e), n.select())
+            })) : (this[0].setSelectionRange ? (e = this[0].selectionStart, t = this[0].selectionEnd) :
+            document.selection && document.selection.createRange && (n = document.selection.createRange(),
+              e = 0 - n.duplicate().moveStart("character", -1e5), t = e + n.text.length), {
+              begin: e,
+              end: t
+            })
+        },
+        unmask: function () {
+          return this.trigger("unmask")
+        },
+        mask: function (t, r) {
+          var c, l, s, u, f, h;
+          return !t && this.length > 0 ? (c = e(this[0]), c.data(e.mask.dataName)()) : (r = e.extend({
+            placeholder: e.mask.placeholder,
+            completed: null
+          }, r), l = e.mask.definitions, s = [], u = h = t.length, f = null, e.each(t.split(""), function (
+            e, t) {
+            "?" == t ? (h--, u = e) : l[t] ? (s.push(RegExp(l[t])), null === f && (f = s.length - 1)) : s
+              .push(null)
+          }), this.trigger("unmask").each(function () {
+            function c(e) {
+              for (; h > ++e && !s[e];);
+              return e
+            }
 
-        {
-             id:3,
-             name:'Guerisson Red Jinseng cream',
-             photo:'http://optcarboxy.local/images/gfhs11.png',
-             price:550,
-         },
+            function d(e) {
+              for (; --e >= 0 && !s[e];);
+              return e
+            }
 
-         {
-             id:4,
-             name:'Guerisson 9 complex cream',
-             photo:'http://optcarboxy.local/images/hgdjhkfsss.png',
-             price:550,
-         },
+            function m(e, t) {
+              var n, a;
+              if (!(0 > e)) {
+                for (n = e, a = c(t); h > n; n++)
+                  if (s[n]) {
+                    if (!(h > a && s[n].test(R[a]))) break;
+                    R[n] = R[a], R[a] = r.placeholder, a = c(a)
+                  } b(), x.caret(Math.max(f, e))
+              }
+            }
 
-         {
-             id:5,
-             name:'Normal No More',
-             photo:'http://optcarboxy.local/images/fgskfjlkfee.png',
-             price:265,
-         },
+            function p(e) {
+              var t, n, a, i;
+              for (t = e, n = r.placeholder; h > t; t++)
+                if (s[t]) {
+                  if (a = c(t), i = R[t], R[t] = n, !(h > a && s[a].test(i))) break;
+                  n = i
+                }
+            }
 
-     ];
-   </script>
+            function g(e) {
+              var t, n, a, r = e.which;
+              8 === r || 46 === r || i && 127 === r ? (t = x.caret(), n = t.begin, a = t.end, 0 === a -
+                n && (n = 46 !== r ? d(n) : a = c(n - 1), a = 46 === r ? c(a) : a), k(n, a), m(n, a -
+                  1), e.preventDefault()) : 27 == r && (x.val(S), x.caret(0, y()), e.preventDefault())
+            }
 
-    <noscript>
-      <strong>We're sorry but cart doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
+            function v(t) {
+              var n, a, i, l = t.which,
+                u = x.caret();
+              t.ctrlKey || t.altKey || t.metaKey || 32 > l || l && (0 !== u.end - u.begin && (k(u.begin, u
+                  .end), m(u.begin, u.end - 1)), n = c(u.begin - 1), h > n && (a = String.fromCharCode(
+                  l), s[n].test(a) && (p(n), R[n] = a, b(), i = c(n), o ? setTimeout(e.proxy(e.fn
+                  .caret, x, i), 0) : x.caret(i), r.completed && i >= h && r.completed.call(x))), t
+                .preventDefault())
+            }
 
-    <div id="cart">
+            function k(e, t) {
+              var n;
+              for (n = e; t > n && h > n; n++) s[n] && (R[n] = r.placeholder)
+            }
 
-       <!--корзина форма start-->
-        <cart></cart>
+            function b() {
+              x.val(R.join(""))
+            }
 
-        <div class="form_block" v-cloak v-show="$store.state.showForm">
-            <div class="wrap_form_block">
-                 <span class="close">
-                    <font-awesome-icon @click="hiddenForm" icon="times-circle"></font-awesome-icon>
-                 </span>
-                <div class="form_title">Оформить заказ</div>
-                <form action="https://money.yandex.ru/eshop.xml" method="post" target="_blank">
-                    <input name="shopId" value="172021" type="hidden" required/>
-                    <input name="scid" value="705575" type="hidden" required/>
+            function y(e) {
+              var t, n, a = x.val(),
+                i = -1;
+              for (t = 0, pos = 0; h > t; t++)
+                if (s[t]) {
+                  for (R[t] = r.placeholder; pos++ < a.length;)
+                    if (n = a.charAt(pos - 1), s[t].test(n)) {
+                      R[t] = n, i = t;
+                      break
+                    } if (pos > a.length) break
+                } else R[t] === a.charAt(pos) && t !== u && (pos++, i = t);
+              return e ? b() : u > i + 1 ? (x.val(""), k(0, h)) : (b(), x.val(x.val().substring(0, i +
+                1))), u ? t : f
+            }
+            var x = e(this),
+              R = e.map(t.split(""), function (e) {
+                return "?" != e ? l[e] ? r.placeholder : e : void 0
+              }),
+              S = x.val();
+            x.data(e.mask.dataName, function () {
+              return e.map(R, function (e, t) {
+                return s[t] && e != r.placeholder ? e : null
+              }).join("")
+            }), x.attr("readonly") || x.one("unmask", function () {
+              x.unbind(".mask").removeData(e.mask.dataName)
+            }).bind("focus.mask", function () {
+              clearTimeout(n);
+              var e;
+              S = x.val(), e = y(), n = setTimeout(function () {
+                b(), e == t.length ? x.caret(0, e) : x.caret(e)
+              }, 10)
+            }).bind("blur.mask", function () {
+              y(), x.val() != S && x.change()
+            }).bind("keydown.mask", g).bind("keypress.mask", v).bind(a, function () {
+              setTimeout(function () {
+                var e = y(!0);
+                x.caret(e), r.completed && e == x.val().length && r.completed.call(x)
+              }, 0)
+            }), y()
+          }))
+        }
+      })
+    })(jQuery);
+  </script>
 
-                    <div class="form_wrap">
-                        <label>Имя покупателя</label>
-                        <input required  name="custName" value="" />
-                    </div>
+  <script>
+    var PRODUCT = [
 
-                    <div class="form_wrap">
-                        <label>Телефон покупателя</label>
-                        <input required  name="customerNumber" type="tel" value="" />
-                    </div>
+      {
+        id: 1,
+        name: 'Тоник для лица «Guerisson skin»',
+        photo: 'http://optcarboxy.local/images/18.png',
+        price: 1450,
+      },
 
-                    <div class="form_wrap">
-                        <label>Эл. почта покупателя</label>
-                        <input name="custEmail"  type="email" value="" />
-                    </div>
+      {
+        id: 2,
+        name: 'Карбокси-маска Dj Carborn Therapy',
 
-                    <div class="form_wrap">
-                        <label>Адрес доставки</label>
-                        <input name="custAddr" value="" size="64"/>
-                    </div>
+        price: 2500,
+      },
 
-                    <input name="sum" type="hidden"  :value="$store.getters.Total"  >
-                    <input type="hidden" name="orderDetails" :value="$store.getters.orderDetails" />
+      {
+        id: 3,
+        name: 'Guerisson Red Jinseng cream',
+        photo: 'http://optcarboxy.local/images/gfhs11.png',
+        price: 550,
+      },
 
-                    <input name="ym_merchant_receipt" :value="$store.getters.orderDetails2"  type="hidden"/>
-                    <input type="submit" value="Заплатить">
-                </form>
+      {
+        id: 4,
+        name: 'Guerisson 9 complex cream',
+        photo: 'http://optcarboxy.local/images/hgdjhkfsss.png',
+        price: 550,
+      },
 
+      {
+        id: 5,
+        name: 'Normal No More',
+        photo: 'http://optcarboxy.local/images/fgskfjlkfee.png',
+        price: 265,
+      },
 
-            </div>
-        </div>
-      <!--корзина форма end-->
+    ];
+  </script>
 
+  <noscript>
+    <strong>We're sorry but cart doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
 
-      <p>
-        <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(1)">1</a>
-        <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(2)">2</a>
-        <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(3)">3</a>
-        <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(4)">4</a>
-        <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(5)">5</a>
-      </p>
+  <div id="cart">
 
+    <!--корзина форма start-->
+    <cart></cart>
+
+    <div class="form_block" v-cloak v-show="$store.state.showForm">
+      <div class="wrap_form_block">
+        <span class="close">
+          <font-awesome-icon @click="hiddenForm" icon="times-circle"></font-awesome-icon>
+        </span>
+        <div class="form_title">Оформить заказ</div>
+        <form action="https://money.yandex.ru/eshop.xml" method="post" target="_blank">
+          <input name="shopId" value="172021" type="hidden" required />
+          <input name="scid" value="705575" type="hidden" required />
+
+          <div class="form_wrap">
+            <label>Имя покупателя</label>
+            <input required name="custName" value="" />
+          </div>
+
+          <div class="form_wrap">
+            <label>Телефон покупателя</label>
+            <input required name="customerNumber" type="tel" value="" />
+          </div>
+
+          <div class="form_wrap">
+            <label>Эл. почта покупателя</label>
+            <input name="custEmail" type="email" value="" />
+          </div>
+
+          <div class="form_wrap">
+            <label>Адрес доставки</label>
+            <input name="custAddr" value="" size="64" />
+          </div>
+
+          <input name="sum" type="hidden" :value="$store.getters.Total">
+          <input type="hidden" name="orderDetails" :value="$store.getters.orderDetails" />
+
+          <input name="ym_merchant_receipt" :value="$store.getters.orderDetails2" type="hidden" />
+          <input type="submit" value="Заплатить">
+        </form>
+      </div>
     </div>
-    <!-- built files will be auto injected -->
-  </body>
+
+    <div class="form_block" v-cloak v-show="$store.state.showFormLead">
+      <div class="wrap_form_block">
+        <span class="close">
+          <font-awesome-icon @click="ShowHiddenFormLead" icon="times-circle"></font-awesome-icon>
+        </span>
+        <div class="form_title">Оформить заказ</div>
+        <form-lead></form-lead>
+      </div>
+    </div>
+
+
+    <!--корзина форма end-->
+
+
+    <p>
+      <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(1)">1</a>
+      <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(2)">2</a>
+      <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(3)">3</a>
+      <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(4)">4</a>
+      <a style="display: block;font-size: 20px;margin-bottom: 20px;" href="#" @click.prevent="addCart(5)">5</a>
+    </p>
+
+    <p>
+      <a href="#" @click.prevent="ShowHiddenFormLead">Обычная форма</a>
+    </p>
+
+  </div>
+  <!-- built files will be auto injected -->
+</body>
+
 </html>
